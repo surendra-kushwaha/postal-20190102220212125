@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/font.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <title>Login Desktop</title>
+</head>
+
+<body class="login-body" ng-app="mainApp" ng-controller="LoginController" class="ng-cloak">
+  <div class="container-fluid">
+    <img src="Icon/Package login.png" class="login-png">
+    <div class="login">
+      <img src="Icon/Package Icon.png" class="package-icon-png" />
+      <div class="package-title">SETTLEMENT DEMO</div>
+      <form name="login-form" class="mx-auto">
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" ng-model="username" placeholder="Username" />
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password" />
+        </div>
+        <input type="submit" class="btn btn-primary" name="Submit" ng-click="validateUser(username,password)" value="LOGIN" />
+      </form>
+    </div>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/angular.min.js"></script>
+
+  <script src="js/dirPagination.js"></script>
+  <script src="js/controllers/main.js"></script>
+  <script src="js/controllers/loginController.js"></script>
+  <script>
+    $(document).ready(function() { sessionStorage.clear(); });
+     </script>
+</body>
+
+</html>

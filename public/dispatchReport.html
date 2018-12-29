@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Detailed Simulation Results</title>
+
+  <!-- Bootstrap core CSS -->
+
+
+  <link href="css/font.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+</head>
+
+<body ng-app="mainApp" ng-controller="DispatchReportController" class="ng-cloak" id="body-main">
+  <nav class="full-screen-menu">
+    <ul>
+      <img src="Icon/Close Blue@2x.png" class="close-button" alt="Close">
+      <li>
+        <a href="/home.html">Simulate Package Events
+          <img src="Icon/Chevron Blue@2x.png" class="float-right">
+        </a>
+      </li>
+      <li>
+        <a href="/viewReports.html">View Simulation Results
+          <img src="Icon/Chevron Blue@2x.png" class="float-right">
+        </a>
+      </li>
+      <li>
+        <a href="/index.html">Log Out
+          <img src="Icon/Chevron Blue@2x.png" class="float-right">
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <header>
+    <a href="/home.html" >
+      <img src="Icon/Path 4.png" class="float-left pt-1"> &nbsp;&nbsp;Back</a>
+    <div class="title">
+      POSTAL SETTLEMENT APPLICATION
+      <button class="menu-button">
+        <img src="Icon/Menu.png" alt="Menu">
+      </button>
+    </div>
+    <div class="user mt-5 pt-3">Country:&nbsp;&nbsp;{{userCountry}}</div>
+    <div class="user" style="display:none">View Simulation Results</div>
+  </header>
+
+  <div class="table-responsive dispatch-options-block">
+    <table class="table">
+      <thead>
+        <tr class="border-0">
+          <th scope="col" class="p-0">
+            <a href="#" class="active" id="summary-link" ng-click="callback('summary-link')">{{activeMenuHeading[0]}}</a>
+            </i>
+          </th>
+          <th scope="col" class="p-0">
+            <a href="#" id="reconcile-link" ng-click="callback('reconcile-link')">{{activeMenuHeading[1]}}</a>
+            </i>
+          </th>
+          <th scope="col" class="p-0">
+            <a href="#" id="unreconcile-link" ng-click="callback('unreconcile-link')">{{activeMenuHeading[2]}}</a>
+            </i>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="p-0">
+            <div class="mt-3 summary-view">
+              <img src="Icon/Active.png" alt="origin" id="origin-img"  >
+              <span class="OD-line"></span>
+              <img src="Icon/Unactive.png" id="destination-img"   alt="destonation">
+              <div class="OD-countries">
+                <div>
+                  <p class="blue-text">ORIGIN</p>
+                  <p class="normal-text mt-1">{{originPost}}</p>
+                </div>
+                <div>
+                  <p class="blue-text">DESTINATION</p>
+                  <p class="normal-text mt-1">{{destinationPost}}</p>
+                </div>
+              </div>
+          </td>
+          <td>
+            <p class="blue-text mt-4">PACKAGE TYPE</p>
+            <div class="pakage-options">
+              <!-- <select ng-if="false" ng-model="parcelType" ng-options="x for x in parcelRegistry">
+
+              </select> -->
+
+              <select>
+
+                <option value="Package Type">Package Type</option>
+                <option value="Tracked Packet">Tracked Packet</option>
+                <option value="Express">Express</option>
+                <option value="Untracked Packets">Untracked Packets</option>
+                <option value="Parcels">Parcels</option>
+                <option value="Registered">Registered</option>
+                <!-- <option ng-repeat="item in parcelRegistry" ng-value="item">{{item}}</option>-->
+              </select>
+            </div>
+          </td>
+          <td class="border-0">
+            <p class="blue-text mt-4">SIMULATION DATES</p>
+            <p class="normal-text mt-4">{{startDate| date : "MM/dd/y" }}
+              <img src="Icon/line.png" class="mb-1 px-2" />{{endDate| date : "MM/dd/y" }}</p>
+          </td>
+        </tr>
+        <tr ng-if="!dispatchView" id="package-id-container">
+          <td colspan="3">
+            <p class="blue-text">DISPATCH ID</p>
+            <p class="normal-text mt-3">{{dispatchId}}</p>
+            <a href="#" ng-click="backToAllDispatch()" class="back" style="text-decoration: none !important;">
+              < Back to All Dispatches</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display:none;text-align: center;">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body" style="padding:50px;">
+            <img src="img/confirmation.png"></img> 
+           
+            <h5 style="margin-top: 50px;">Status Updated Sucessfully.</h5>
+          </div>
+          <div class="modal-footer justify-content-center" style="border:none">
+            <button type="button" class="btn btn-secondary allbuttons" data-dismiss="modal" onclick=" $('#exampleModalCenter').modal('hide')">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="container" id="table-container" style="display: none;">
+      <div class="search" ng-if="dispatches.length>0">
+        <img src="Icon/serach.png" alt="search">
+        <input id="searchBox" type="text" ng-model="query" ng-change="updateOutput()" placeholder="Search by {{searchBy}} or Settlement Status"
+        />
+      </div>
+      <div class="table-responsive-sm">
+        <table class="table" ng-if="dispatches.length>0">
+          <thead>
+            <tr>
+              <th scope="col" ng-repeat="column in tableColumns">{{column}}</th>
+            </tr>
+          </thead>
+          <tbody ng-if="dispatchView" id="dispatch-table">
+            <tr dir-paginate="dispatch in dispatches  | filter: parcelType |itemsPerPage:25 ">
+              <td>
+                <a href="#" ng-click="moveToPackageScreen(dispatch.dispatchId)">{{dispatch.dispatchId}}</a>
+              </td>
+              <td ng-if="dispatchType==='reconcile'">{{dispatch.totalReconciledWeight | number:2}}</td>
+              <td ng-if="dispatchType==='reconcile'">{{dispatch.totalReconciledPackages}}</td>
+              <td ng-if="dispatchType==='unreconcile'">{{dispatch.totalUnreconciledWeight | number:2}}</td>
+              <td ng-if="dispatchType==='unreconcile'">{{dispatch.totalUnreconciledPackages}}</td>
+              <td>{{dispatch.settlementStatus}}</td>
+              <!-- <td ng-if="displayAction">
+Action
+</td> -->
+            </tr>
+          </tbody>
+          <tbody ng-if="!dispatchView" id="package-table">
+            <tr dir-paginate="package in packages |orderBy:'package.dateCreated':true |filter: query |itemsPerPage:25">
+              <td>
+                <a href="#" ng-click="moveToPackageTimeLineScreen(package)">{{package.packageId}}</a>
+              </td>
+              <td>{{package.weight | number:2}}</td>
+              <td>{{package.receptacleId}}</td>
+              <td>{{package.shipmentStatus}}</td>
+              <td>{{package.settlementStatus}}</td>
+              <td ng-if="displayAction">
+                <div class="dropdown" ng-if="package.displayPackageActionDropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="border: none;font-family: IBMPlexSans-Regular;text-decoration: none; font-size: 12px;color: #333366;letter-spacing: -0.2px;line-height: 15px;">Action
+
+                  </button>
+                  <ul class="dropdown-menu menu-action">
+                    <li>
+                      <a href="#" ng-click="updateAction(package.actionRegistry[0],package.packageId)">{{package.actionRegistry[0]}}</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a href="#" ng-click="updateAction(package.actionRegistry[1],package.packageId)">{{package.actionRegistry[1]}}</a>
+                    </li>
+
+
+                  </ul>
+                </div>
+                <div ng-if="!package.displayPackageActionDropdown" ng-click="updateAction(package.packageUpdateAction,package.packageId)"
+                  class="action" style="cursor: pointer;">
+                  {{package.packageUpdateAction}}&nbsp;&nbsp;&nbsp;
+                  <img ng-if="package.packageUpdateAction!='NA'" src="Icon/Chevron Blue.png">
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <div class="pagecount" ng-if="dispatches.length>0 || packages.length>0">
+        <nav aria-label="Page navigation example">
+          <dir-pagination-controls max-size="1" direction-links="true" boundary-links="true">
+          </dir-pagination-controls>
+        </nav>
+      </div>
+
+      <div class="back" ng-if="dispatches.length==0" style="font-family:'IBMPlexSans-Bold';margin-top:10%;">
+
+       {{noPackagesMsg}}
+      </div>
+      <div ng-if="!dispatchView" class="dispute-btn" id="dispute-all" style="margin:20px">
+        <button type="button" class="btn"  ng-click="updateDispatchAction(packageAllAction)">{{packageAllAction}}</button>&nbsp;
+      </div> 
+      <div ng-if="!dispatchView" class="dispute-btn " id="dispute-all" style="margin: 20px"> 
+        <button type="button" class="btn" ng-if="packageSettlementStatusCount.length>=1"   ng-click="updateDispatchAction(packageAllConfirmAction)">{{packageAllConfirmAction}}</button>
+      </div>
+    </div>
+
+    <div class="container" id="summary-container" style="display: block;">
+      <div class="row summary-data">
+        <div class="col-md-3 col-sm-5 col-xs-4">
+          <div class="circle-block">  <div class="circle-data">{{totalReconciledPackages}}</div></div>
+          <p class="circle-caption">Total Reconciled Items</p>
+        </div>
+        <div class="col-md-3 col-sm-5 col-xs-4">
+          <div class="circle-block"> <div class="circle-data">{{totalReconciledWeight}}</div></div>
+          <p class="circle-caption">Total Reconciled Weight (kg)</p>
+        </div>
+        <div class="col-md-3 col-sm-5 col-xs-4">
+          <div class="circle-block">  <div class="circle-data">{{totalUnreconciledPackages}}</div></div>
+          <p class="circle-caption">Total Unreconciled Items</p>
+        </div>
+        <div class="col-md-3 col-sm-5 col-xs-4">
+          <div class="circle-block"> <div class="circle-data">{{totalUnreconciledWeight}}</div></div>
+          <p class="circle-caption">Unreconciled Package Weight (kg)</p>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div class="back">
+      <a href="/home.html">
+        <img src="Icon/Path 4.png" class="float-left pt-1"> &nbsp;&nbsp;Back</a>
+    </div>
+   
+    <footer class="footer pt-3">
+      <img src="Icon/Package footer.png" alt="">
+      <div class="copyright">
+        <p>Copyright © 2018 Accenture.</p>
+        <p>All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/dummyData.js"></script>
+    <script src="js/dirPagination.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/dispatchReportController.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/custom-select.js"></script>
+
+    </script>
+</body>
+
+</html>
