@@ -3,7 +3,7 @@ stages:
 - name: Deploy Postal Application
   inputs:
   - type: git
-    branch: postal-toolchain
+    branch: master
     service: ${SAMPLE_REPO}
   triggers:
   - type: commit
