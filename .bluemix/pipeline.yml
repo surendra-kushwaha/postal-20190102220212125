@@ -35,7 +35,6 @@ stages:
       npm install -g yarn
       yarn install
       yarn build  
-
 - name: DEPLOY
   inputs:
   - type: job
