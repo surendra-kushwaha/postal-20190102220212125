@@ -10,8 +10,8 @@ stages:
   jobs:
   - name: Build
     type: builder
-    value: "npm"
-    script: |
+    builders:
+    - npm: |
       #!/bin/bash
         # The default Node.js version is 0.10.40
         # To use Node.js 0.10.48, uncomment the following line:
