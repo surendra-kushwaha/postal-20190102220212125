@@ -10,6 +10,8 @@ stages:
   jobs:
   - name: Build
     type: builder
+    npm: selected
+    value: 'npm'
     script: |
       #!/bin/bash
         # The default Node.js version is 0.10.40
