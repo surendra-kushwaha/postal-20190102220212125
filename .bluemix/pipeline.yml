@@ -33,9 +33,7 @@ stages:
       PATH=$NODE_8_INSTALL_DIR:$PATH
       node -v
       npm install -g yarn
-      # Install server dependencies
       yarn install
-      # Build server
       yarn build  
 
 - name: DEPLOY
