@@ -1,15 +1,28 @@
 ---
 stages:
-- name: Deploy Postal Application
+- name: BUILD
   inputs:
   - type: git
     branch: master
     service: ${SAMPLE_REPO}
   triggers:
   - type: commit
+  jobs:
+  - name: Build
+    type: builder
+- name: DEPLOY
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+  triggers:
+  - type: stage
   properties:
-  - name: SAMPLE_REPO
-    value: '{{SAMPLE_REPO}}'
+  - name: CF_APP_NAME
+    value: undefined
+    type: text
+  - name: APP_URL
+    value: undefined
     type: text
 
   jobs:
