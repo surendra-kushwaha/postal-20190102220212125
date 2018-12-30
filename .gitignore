@@ -1,0 +1,24 @@
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+
+build
+node_modules/
+coverage/
+npm-debug.log
+yarn-error.log
+logs
+.env
+.project
+
+# Editors and IDEs
+.vscode/*
+!.vscode/snippets
+!.vscode/launch.json
+!.vscode/settings.json
+
+# logs
+logs.txt
+log.txt
+
+# configs
+config/
