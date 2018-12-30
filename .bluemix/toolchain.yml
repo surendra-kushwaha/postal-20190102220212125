@@ -13,9 +13,9 @@ template:
     - marbles-repo
   info:
     git url: >-
-      [https://git.ng.bluemix.net/surendra.kushwaha/postal-scm-go](https://git.ng.bluemix.net/surendra.kushwaha/postal-scm-go)
+      [https://git.ng.bluemix.net/nodejs-angular-community/postal-toolchain](https://git.ng.bluemix.net/nodejs-angular-community/postal-toolchain)
     git branch: >-
-      [postal-toolchain](https://git.ng.bluemix.net/surendra.kushwaha/postal-scm-go/tree/postal-toolchain)
+      [master](https://git.ng.bluemix.net/nodejs-angular-community/postal-toolchain)
 toolchain:
   name: 'postal-tc-{{timestamp}}'
   template:
@@ -26,7 +26,7 @@ services:
     service_id: githubpublic
     parameters:
       repo_name: 'postal-{{timestamp}}'
-      repo_url: 'https://git.ng.bluemix.net/surendra.kushwaha/postal-scm-go'
+      repo_url: 'https://git.ng.bluemix.net/nodejs-angular-community/postal-toolchain'
       type: clone
       has_issues: false
       enable_traceability: true
@@ -53,7 +53,7 @@ services:
       type: 'Postal'
       lifecyclePhase: 'RUN'
       imageUrl: 'https://github.com/IBM-Blockchain/toolchain-sample-marbles/raw/master/.bluemix/marbles-36.png'
-      documentationUrl: 'https://git.ng.bluemix.net/surendra.kushwaha/postal-scm-go/tree/postal-toolchain'
+      documentationUrl: 'https://git.ng.bluemix.net/nodejs-angular-community/postal-toolchain'
       name: 'Node.js Applicaiton'
       dashboard_url: 'https://{{form.pipeline.parameters.cf-app-name}}.mybluemix.net/login'
       description: 'This is your Postal node.js application. You do not need to modify anything.'
