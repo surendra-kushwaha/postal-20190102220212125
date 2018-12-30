@@ -10,7 +10,7 @@ stages:
   jobs:
   - name: Build
     type: builder
-    value: npm
+    build_type: npm
     script: |
       node_version=v8.9.4
       install_name=node-v8.9.4-linux-x64
