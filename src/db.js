@@ -4,8 +4,7 @@ import logger from './logger';
 logger.info('Connecting database...');
 const mongoose = require('mongoose');
 // load VCAP configuration  and service credentials
-const vcapCredentials = require('./config/vcap-local.json');
-
+/*const vcapCredentials = require('./config/vcap-local.json');
 const options = {
   // useNewUrlParser: true,
   // autoIndex: false, // Don't build indexes
@@ -17,11 +16,53 @@ const options = {
   // connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
   // socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
   // family: 4 // Use IPv4, skip trying IPv6
+};*/
+
+// Now lets get cfenv and ask it to parse the environment variable
+var cfenv = require('cfenv');
+
+// load local VCAP configuration  and service credentials
+var vcapLocal;
+try {
+    vcapLocal = require('./vcap-local.json');
+    console.log("Loaded local VCAP");
+} catch (e) {
+    // console.log(e)
+}
+
+const appEnvOpts = vcapLocal ? {
+    vcap: vcapLocal
+} : {}
+
+const appEnv = cfenv.getAppEnv(appEnvOpts);
+
+// Within the application environment (appenv) there's a services object
+let services = appEnv.services;
+
+// The services object is a map named by service so we extract the one for MongoDB
+let mongodb_services = services["compose-for-mongodb"];
+
+// This check ensures there is a services for MongoDB databases
+//assert(!util.isUndefined(mongodb_services), "App must be bound to compose-for-mongodb service");
+
+// We now take the first bound MongoDB service and extract it's credentials object
+let credentials = mongodb_services[0].credentials;
+
+// We always want to make a validated TLS/SSL connection
+let options = {
+    ssl: true,
+    sslValidate: true
 };
+
+// If there is a certificate available, use that, otherwise assume Lets Encrypt certifications.
+if (credentials.hasOwnProperty("ca_certificate_base64")) {
+    let ca = [new Buffer(credentials.ca_certificate_base64, 'base64')];
+    options.sslCA = ca;
+}
 
 // mongoose.connect(vcapCredentials.uri, options);
 mongoose.connect(
-  vcapCredentials.uri,
+  credentials.uri,
   options,
 );
 
