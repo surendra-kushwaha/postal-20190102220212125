@@ -63,7 +63,8 @@ stages:
       #GIT_HASH=$(git rev-parse HEAD)
       GIT_CC_HASH=$(date +%s)
       GIT_HASH=$(date +%s)
-      export MONGO_SERVICE_INSTANCE_NAME="ibp-mongo-via-tc"
+      #Create mongodb servoce in advance in same Org/Space as it takes time to provision
+      export MONGO_SERVICE_INSTANCE_NAME="PostalSCM-MongoDB-qa"
       # detect_exit - will update the IBP service with the error or success of your postal deployment
        detect_exit()
       {
@@ -148,11 +149,11 @@ stages:
       # -----------------------------------------------------------
       # 1.1. Create a new mongo db service instance (this creates our mongodb service)
       # -----------------------------------------------------------
-      printf "\n--- Cleaning up any old service instances of the IBM compose for mongodb (its okay if the command belows fails) ---\n"
-      cf delete-service "${MONGO_SERVICE_INSTANCE_NAME}" -f || true                         # delete existing network (if there is one)
-      printf "\n--- Creating a new service instance of the IBM compose for mongo db service ---\n"
-      cf create-service compose-for-mongodb Standard  "${MONGO_SERVICE_INSTANCE_NAME}" # create the db
-      sleep 15                             # give her a second to warm up
+      #printf "\n--- Cleaning up any old service instances of the IBM compose for mongodb (its okay if the command belows fails) ---\n"
+      #cf delete-service "${MONGO_SERVICE_INSTANCE_NAME}" -f || true                         # delete existing network (if there is one)
+      #printf "\n--- Creating a new service instance of the IBM compose for mongo db service ---\n"
+      #cf create-service compose-for-mongodb Standard  "${MONGO_SERVICE_INSTANCE_NAME}" # create the db
+      #sleep 15                             # give her a second to warm up
 
       # -----------------------------------------------------------
       # 2. Create service creds for the service instance
