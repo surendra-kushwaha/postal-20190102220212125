@@ -62,7 +62,8 @@ stages:
       #GIT_CC_HASH=$(git ls-tree --abbrev=12 HEAD ./chaincode/src/marbles | cut -d ' ' -f 3 | cut -f 1)
       #GIT_HASH=$(git rev-parse HEAD)
       GIT_CC_HASH=$(date +%s)
-      GIT_HASH=$(date +%s)  
+      GIT_HASH=$(date +%s)
+      export MONGO_SERVICE_INSTANCE_NAME="PostalSCM-MongoDB-qa"
       # detect_exit - will update the IBP service with the error or success of your postal deployment
        detect_exit()
       {
@@ -278,36 +279,12 @@ stages:
 
       printf "\n--- Binding the IBM Blockchain Platform service to postal ---\n"
       cf bind-service $CF_APP "${SERVICE_INSTANCE_NAME}" -c "{\"permissions\":\"read-only\"}"  # bind marbles app to the blockchain service
+      printf "\n--- Binding the IBM MongoDB service to postal ---\n"
+      cf bind-service $CF_APP "${MONGO_SERVICE_INSTANCE_NAME}" -c "{\"permissions\":\"read-only\"}"  # bind marbles app to the blockchain service
 
       # -----------------------------------------------------------
       # Start her up
       # -----------------------------------------------------------
-      #!/bin/bash
-        # The default Node.js version is 0.10.40
-        # To use Node.js 0.10.48, uncomment the following line:
-        #export PATH=/opt/IBM/node-v0.10.48/bin:$PATH
-        # To use Node.js 0.12.7, uncomment the following line:
-        #export PATH=/opt/IBM/node-v0.12/bin:$PATH
-        # To use Node.js 4.4.5, uncomment the following line:
-        #export PATH=/opt/IBM/node-v4.4.5/bin:$PATH
-        # To use Node.js 6.7.0, uncomment the following line:
-        #export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
-        node_version=v8.9.4
-        install_name=node-v8.9.4-linux-x64
-        if [ ! -e $install_name.tar.gz ]; then
-        wget "http://nodejs.org/dist/$node_version/$install_name.tar.gz"
-        echo 'Untarring'
-        tar xf $install_name.tar.gz
-        fi
-        NODE_8_INSTALL_DIR=`pwd`/$install_name/bin
-        PATH=$NODE_8_INSTALL_DIR:$PATH
-        node -v
-        # Install Yarn
-        npm install -g yarn
-        # Install server dependencies
-        yarn install
-        # Build server
-        yarn build
       printf "\n--- Starting Marbles ---\n"
       cf start $CF_APP
 
