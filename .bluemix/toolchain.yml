@@ -55,7 +55,7 @@ services:
       imageUrl: 'https://github.com/IBM-Blockchain/toolchain-sample-marbles/raw/master/.bluemix/marbles-36.png'
       documentationUrl: 'https://git.ng.bluemix.net/nodejs-angular-community/postal-toolchain'
       name: 'Node.js Applicaiton'
-      dashboard_url: 'https://{{form.pipeline.parameters.cf-app-name}}.mybluemix.net/login'
+      dashboard_url: 'https://{{form.pipeline.parameters.cf-app-name}}.mybluemix.net'
       description: 'This is your Postal node.js application. You do not need to modify anything.'
       additional-properties: 'n/a'
 form:
