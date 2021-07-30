@@ -4,7 +4,8 @@ name: Run periodically.
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    #- cron: '*/10 * * * *'
+    -  cron: '0 0 1 * *'
   # Allows you to run this workflow manually from the Actions tab
   #workflow_dispatch:
 jobs:
