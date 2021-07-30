@@ -23,7 +23,7 @@
         "winston": "^2.4.0",
         "winston-daily-rotate-file": "^1.7.2",
         "yamljs": "^0.3.0",
-        "ws": "1.1.x",
+        "ws": "5.2.x",
         "jade": "1.1.x",
         "dateformat": "2.0.x",
         "querystring": "0.2.x",
