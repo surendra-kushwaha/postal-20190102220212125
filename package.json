@@ -29,7 +29,7 @@
         "querystring": "0.2.x",
         "fabric-ca-client": "1.1.0",
         "fabric-client": "1.1.0",
-        "grpc": "1.10.1",
+        "grpc": "1.24.11",
         "cfenv": "1.0.x",
         "lodash": "^4.17.11"
     },
