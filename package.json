@@ -19,7 +19,7 @@
         "pretty-error": "^2.1.1",
         "source-map-support": "^0.5.3",
         "swagger-ui-express": "^3.0.8",
-        "validator": "^10.2.0",
+        "validator": "^13.7.0",
         "winston": "^2.4.0",
         "winston-daily-rotate-file": "^1.7.2",
         "yamljs": "^0.3.0",
