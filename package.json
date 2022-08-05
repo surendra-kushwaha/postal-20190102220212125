@@ -14,7 +14,7 @@
         "ejs": "^2.6.1",
         "express": "^4.15.5",
         "mongodb": "^3.1.0-beta4",
-        "mongoose": "^5.1.1",
+        "mongoose": "^5.7.5",
         "morgan": "^1.9.0",
         "pretty-error": "^2.1.1",
         "source-map-support": "^0.5.3",
